@@ -14,7 +14,7 @@ sequence = [
     {
         "time" : (0,40),
         "type" : ShotType.title,
-        "text" : "testbenches",
+        "text" : "github.com/mattvenn/ws2812-core",
     },
     {
         "time" : (1,45),
@@ -70,11 +70,6 @@ sequence = [
         "time" : (6,0),
         "type" : ShotType.title,
         "text" : "ws2812 long reset time",
-    },
-    {
-        "time" : (6,30),
-        "type" : ShotType.title,
-        "text" : "change params",
     },
     {
         "time" : (6,30),
