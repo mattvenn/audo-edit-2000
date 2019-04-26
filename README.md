@@ -9,6 +9,7 @@
 
 * can't preview the transitions because of errors with moviepy. get errors very similar to this: https://github.com/Zulko/moviepy/issues/863, if audio is removed, preview works
 * start the recordings together to avoid having to correct in the sequencer
+* video links don't work for TOC
 
 # project notes
 
@@ -27,5 +28,4 @@ tried adding thread_queue_size option, seems to improve things
 video sync how to do it?
 
 gave up on recordmydesktop, too long a wait after recording without onthefly encoding, but too variable a framerate with onthefly encoding. using ffmpeg instead.
-
 
