@@ -7,74 +7,71 @@ class ShotType(Enum):
 
 sequence = [
     {
-        "time" : (0,15),
+        "time" : (7,05),
         "type" : ShotType.title,
-        "text" : "intro to cover",
+        "text" : "ws2812 parameters",
     },
     {
-        "time" : (0,40),
+        "time" : (7,32),
+        "type" : ShotType.cut,
+    },
+    {
+        "time" : (8,1),
         "type" : ShotType.title,
-        "text" : "testbenches",
+        "text" : "webpage...",
     },
     {
-        "time" : (1,47),
+        "time" : (8,50),
         "type" : ShotType.title,
-        "text" : "makefile",
-    },
-    # fake
-    {
-        "time" : (1,50),
-        "type" : ShotType.end,
+        "text" : "cover reached",
     },
     {
-        "time" : (2,9),
-        "type" : ShotType.title,
-        "text" : "gtkwave",
-    },
-    {
-        "time" : (2,40),
-        "type" : ShotType.title,
-        "text" : "4 LEDs parameter",
-    },
-    {
-        "time" : (3,10),
-        "type" : ShotType.title,
-        "text" : "alternative to testbench: cover",
-    },
-    {
-        "time" : (3,21),
+        "time" : (9,06),
         "type" : ShotType.speedup,
-        "speed": 5,
+        "speed" : 5,
     },
     {
-        "time" : (4,40),
+        "time" : (9,25),
         "type" : ShotType.title,
-        "text" : "the cover statement",
+        "text" : "makefile ORing",
     },
     {
-        "time" : (13,13),
+        "time" : (10,0),
+        "type" : ShotType.title,
+        "text" : "append steps",
+    },
+    {
+        "time" : (11,15),
+        "type" : ShotType.title,
+        "text" : "cover LED data",
+    },
+    {
+        "time" : (11,50),
+        "type" : ShotType.title,
+        "text" : "write signal is now toggling",
+    },
+    {
+        "time" : (12,26),
+        "type" : ShotType.title,
+        "text" : "2 LEDs",
+    },
+    {
+        "time" : (12,45),
+        "type" : ShotType.title,
+        "text" : "AABBCC data is seen",
+    },
+    {
+        "time" : (12,50),
+        "type" : ShotType.title,
+        "text" : "outro",
+    },
+    {
+        "time" : (13,10),
+        "type" : ShotType.title,
+        "text" : "COMMENTS!!!",
+    },
+    {
+        "time" : (13,15),
         "type" : ShotType.end,
     },
 ]
-"""
-4:50,sby config
-5:00,makefile
-5:22,run cover with sby
-5:30,cover fails
-6:00,ws2812 long reset time
-6:30,change params
-6:47,SPEEDUP
-7:05,ws2812 timing
-7:32,CUT
-8:01,webpage...
-8:50,cover reached
-9:06,SPEEDUP
-9:30,makefile ORing
-10:00,append
-11:15,cover led data
-11:50,write signal is now toggling
-12:26,2 LEDs
-12:45,AABBCC data is seen
-12:50,outro
-13:10,COMMENTS!!!
-"""
