@@ -8,7 +8,9 @@ screen = screen.without_audio()
 
 webcam_x = screen.w - webcam_w
 webcam = VideoFileClip("cover-webcam.mkv").resize(width=webcam_w).set_pos((webcam_x,0))
-#webcam = webcam.without_audio()
+
+#screen = screen.resize(0.5)
+#webcam = webcam.resize(0.5)
 
 shot_list = []
 from sequence import sequence, ShotType
@@ -40,12 +42,12 @@ for shot_num in range(len(sequence)):
                      .set_position("bottom", "center")
                      .set_duration(TITLE_DURATION))
     
-        shot_list.append( CompositeVideoClip([screen_clip, webcam_clip, title_clip]))
+        shot_list.append(CompositeVideoClip([screen_clip, webcam_clip, title_clip]))
 
     elif shot['type'] == ShotType.speedup:
         print("speeding up section %d" % shot_num)
         # remove audio from sped up parts
-        shot_list.append( CompositeVideoClip([screen_clip, webcam_clip.without_audio()]).fx(vfx.speedx, shot['speed']))
+        shot_list.append(CompositeVideoClip([screen_clip, webcam_clip.without_audio()]).fx(vfx.speedx, shot['speed']))
 
     elif shot['type'] == ShotType.cut:
         print("skipping shot %d" % shot_num)
@@ -56,6 +58,7 @@ for shot_num in range(len(sequence)):
         exit(1)
 
 import time
+print("rendering")
 start_time = time.time()
 result = concatenate_videoclips(shot_list)
 result.write_videofile("rendered.mp4",fps=20)
