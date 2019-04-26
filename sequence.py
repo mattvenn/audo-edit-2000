@@ -7,7 +7,7 @@ class ShotType(Enum):
 
 sequence = [
     {
-        "time" : (0,15),
+        "time" : (0,12),
         "type" : ShotType.title,
         "text" : "intro to cover",
     },
@@ -17,12 +17,12 @@ sequence = [
         "text" : "testbenches",
     },
     {
-        "time" : (1,47),
+        "time" : (1,45),
         "type" : ShotType.title,
         "text" : "makefile",
     },
     {
-        "time" : (2,9),
+        "time" : (2,3),
         "type" : ShotType.title,
         "text" : "gtkwave",
     },
@@ -39,15 +39,15 @@ sequence = [
     {
         "time" : (3,21),
         "type" : ShotType.speedup,
-        "speed": 5,
+        "speed": 2.5,
     },
     {
-        "time" : (4,40),
+        "time" : (4,33),
         "type" : ShotType.title,
         "text" : "the cover statement",
     },
     {
-        "time" : (4,50),
+        "time" : (4,48),
         "type" : ShotType.title,
         "text" : "sby config",
     },
@@ -77,7 +77,7 @@ sequence = [
         "text" : "change params",
     },
     {
-        "time" : (6,47),
+        "time" : (6,30),
         "type" : ShotType.speedup,
         "speed" : 5,
     },
@@ -101,12 +101,12 @@ sequence = [
         "text" : "cover reached",
     },
     {
-        "time" : (9,06),
+        "time" : (9,9),
         "type" : ShotType.speedup,
-        "speed" : 5,
+        "speed" : 3,
     },
     {
-        "time" : (9,25),
+        "time" : (9,24),
         "type" : ShotType.title,
         "text" : "makefile ORing",
     },
@@ -141,7 +141,7 @@ sequence = [
         "text" : "outro",
     },
     {
-        "time" : (13,10),
+        "time" : (13,8),
         "type" : ShotType.title,
         "text" : "COMMENTS!!!",
     },
