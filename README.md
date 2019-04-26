@@ -7,7 +7,7 @@
 
 # todo
 
-* can't preview the transitions because of errors with moviepy. get errors very similar to this: https://github.com/Zulko/moviepy/issues/863
+* can't preview the transitions because of errors with moviepy. get errors very similar to this: https://github.com/Zulko/moviepy/issues/863, if audio is removed, preview works
 * start the recordings together to avoid having to correct in the sequencer
 
 # project notes
