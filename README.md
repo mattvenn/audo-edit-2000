@@ -15,6 +15,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * have webcam composited in top-right corner of screen cap - done (default)
 * fullscreen webcam for some sections - todo
 * generate a youtube compatible TOC - todo
+* full screen titles - todo
 
 # todo
 
