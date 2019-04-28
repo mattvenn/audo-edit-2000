@@ -9,6 +9,16 @@ def get_clip_property(key, shot, clip_name):
 def get_shot_property(key, shot):
     return shot.get(key, config['sequence_defaults'][key])
 
+# utility for lining up the 2 videos
+def offset(timing, offset):
+    minute = timing[0]
+    second = timing[1]
+    seconds = minute * 60 + second
+    seconds -= offset
+    minute = int(seconds / 60)
+    second = seconds - minute * 60
+    return (minute, second)
+
 def create_sequence():
     sequence = config['sequence']
     shot_list = []
@@ -35,7 +45,12 @@ def create_sequence():
         shot['clips'] = []
         # get the subclips and configure them
         for clip_name in comp:
-            clip = config['files'][clip_name]['clip'].subclip(shot_start, shot_end)
+            clip_offset = config['files'][clip_name]['start']
+            offset_start = offset(shot_start, clip_offset)
+            offset_end   = offset(shot_end,   clip_offset)
+            clip = config['files'][clip_name]['clip'].subclip(offset_start, offset_end)
+            logging.debug("clip %s start/end %s %s adj start/end %s %s" % 
+                             (clip_name, shot_start, shot_end, offset_start, offset_end))
 
             # return defaults if not set
             clip_size  = get_clip_property('clip_size', shot, clip_name)
@@ -53,6 +68,7 @@ def create_sequence():
 
             # store the clip in the config
             shot['clips'].append(clip)
+        
 
         # make a title?
         if shot_text is not None:
@@ -71,10 +87,17 @@ def preview_transition(index, preview_length=10):
     clip1 = config['sequence'][index]['clip']
     clip2 = config['sequence'][index+1]['clip']
     concatenate_videoclips([clip1, clip2]).subclip(
-                clip1.duration - preview_length/2, clip2.duration + preview_length/2).preview()
+                clip1.duration - preview_length/2, clip1.duration + preview_length/2).preview()
 
 def preview(index):
     config['sequence'][index]['clip'].preview()
+
+def print_sections():
+    for shot_num, shot in enumerate(config['sequence']):
+        shot_speed = get_shot_property('speed', shot)
+        shot_text  = get_shot_property('text', shot)
+        shot_comp  = get_shot_property('comp', shot)
+        logging.info("%02d : %s %s %s" % (shot_num, shot_text, shot_speed, shot_comp ))
 
 if __name__ == '__main__':
 
@@ -98,7 +121,6 @@ if __name__ == '__main__':
     for name, file_conf in config['files'].items():
         logging.info("opening video for file %s" % name)
         clip = VideoFileClip(args.config + file_conf['file'])
-        clip = clip.subclip(file_conf['start']) # align clips
         if not file_conf['audio']:
             logging.info("removing audio for file %s" % name)
             clip = clip.without_audio()
@@ -112,11 +134,11 @@ if __name__ == '__main__':
     for shot in config['sequence']:
         if 'clip' in shot:
             clips.append(shot['clip'])
-    final = concatenate_videoclips(clips)
+    final = concatenate_videoclips(clips).subclip(20,24)
 
     import ipdb; ipdb.set_trace()
 
-    logging.info("rendering")
+    logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
-    final.write_videofile("rendered.mp4",fps=20)
+    final.write_videofile(config['outfile'], fps=20)
     logging.info("finished rendering in %d seconds" % (time.time() - start_time))

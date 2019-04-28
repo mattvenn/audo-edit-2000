@@ -1,5 +1,5 @@
-
 config = {
+    'outfile': 'cover.mp4',
     'files': 
     {
             'webcam' :
@@ -11,7 +11,7 @@ config = {
             'screen' :
             {
                 'file' :'cover-screen.mkv', # 800 x 600
-                'start': 2,
+                'start': 1.5,
                 'audio': False,
             },
     },
@@ -25,6 +25,7 @@ config = {
         "title_duration" : 5,
         "speed": 1,
     },
+    ##########################################################
     'sequence' : [
     {
         "time" : (0,12),
@@ -39,131 +40,118 @@ config = {
     },
     {
         "time" : (1,45),
-        "clips" : [ "screen" ],
-        "speed": 5,
         "text" : "makefile",
     },
     {
         "time" : (2,3),
         "text" : "gtkwave",
     },
-#    {
-#        "time" : (2,40),
-#        "type" : "title",
-#        "text" : "4 LEDs parameter",
-#    },
-#    {
-#        "time" : (3,10),
-#        "type" : "title",
-#        "text" : "alternative to testbench: cover",
-#    },
-#    {
-#        "time" : (3,21),
-#        "type" : "speedup",
-#        "speed": 2.5,
-#    },
-#    {
-#        "time" : (4,33),
-#        "type" : "title",
-#        "text" : "the cover statement",
-#    },
-#    {
-#        "time" : (4,48),
-#        "type" : "title",
-#        "text" : "sby config",
-#    },
-#    {
-#        "time" : (5,0),
-#        "type" : "title",
-#        "text" : "makefile",
-#    },
-#    {
-#        "time" : (5,22),
-#        "type" : "title",
-#        "text" : "run cover with sby",
-#    },
-#    {
-#        "time" : (5,30),
-#        "type" : "title",
-#        "text" : "cover fails",
-#    },
-#    {
-#        "time" : (6,0),
-#        "type" : "title",
-#        "text" : "ws2812 long reset time",
-#    },
-#    {
-#        "time" : (6,30),
-#        "type" : "speedup",
-#        "speed" : 5,
-#    },
-#    {
-#        "time" : (7,05),
-#        "type" : "title",
-#        "text" : "ws2812 timing",
-#    },
-#    {
-#        "time" : (7,32),
-#        "type" : "cut",
-#    },
-#    {
-#        "time" : (8,1),
-#        "type" : "title",
-#        "text" : "webpage...",
-#    },
-#    {
-#        "time" : (8,50),
-#        "type" : "title",
-#        "text" : "cover reached",
-#    },
-#    {
-#        "time" : (9,9),
-#        "type" : "speedup",
-#        "speed" : 3,
-#    },
-#    {
-#        "time" : (9,24),
-#        "type" : "title",
-#        "text" : "makefile ORing",
-#    },
-#    {
-#        "time" : (10,0),
-#        "type" : "title",
-#        "text" : "append steps",
-#    },
-#    {
-#        "time" : (11,15),
-#        "type" : "title",
-#        "text" : "cover LED data",
-#    },
-#    {
-#        "time" : (11,50),
-#        "type" : "title",
-#        "text" : "write signal is now toggling",
-#    },
-#    {
-#        "time" : (12,26),
-#        "type" : "title",
-#        "text" : "2 LEDs",
-#    },
-#    {
-#        "time" : (12,45),
-#        "type" : "title",
-#        "text" : "AABBCC data is seen",
-#    },
-#    {
-#        "time" : (12,50),
-#        "type" : "title",
-#        "text" : "outro",
-#    },
-#    {
-#        "time" : (13,8),
-#        "type" : "title",
-#        "text" : "COMMENTS!!!",
-#    },
+    {
+        "time" : (2,40),
+        "text" : "4 LEDs parameter",
+    },
+    {
+        "time" : (3,10),
+        "text" : "alternative to testbench: cover",
+    },
+    {
+        "time" : (3,21),
+        "comp" : [ "screen" ],
+        "speed" : 2.5,
+        "text": "adding cover",
+    },
+    {
+        "time" : (4,33),
+        "text" : "the cover statement",
+    },
+    {
+        "time" : (4,48),
+        "text" : "sby config",
+    },
+    {
+        "time" : (5,0),
+        "text" : "makefile",
+    },
+    {
+        "time" : (5,22),
+        "text" : "run cover with sby",
+    },
+    {
+        "time" : (5,30),
+        "text" : "cover fails",
+    },
+    {
+        "time" : (6,0),
+        "text" : "ws2812 long reset time",
+    },
+    {
+        "time" : (6,30),
+        "comp" : [ "screen" ],
+        "text" : "adjust parameters",
+        "speed" : 5,
+    },
+    {
+        "time" : (7,05),
+        "text" : "ws2812 timing",
+    },
+    {
+        "time" : (7,32),
+        "comp" : None,
+    },
+    {
+        "time" : (8,1),
+        "text" : "webpage...",
+    },
+    {
+        "time" : (8,50),
+        "text" : "cover reached",
+    },
+    {
+        "time" : (9,9),
+        "text" : "where did that trace get written?",
+        "speed" : 3,
+    },
+    {
+        "time" : (9,24),
+        "text" : "makefile ORing",
+    },
+    {
+        "time" : (10,0),
+        "text" : "append steps",
+    },
+    {
+        "time" : (11,15),
+        "text" : "cover LED data",
+    },
+    {
+        "time" : (11,50),
+        "text" : "write signal is now toggling",
+    },
+    {
+        "time" : (12,26),
+        "text" : "2 LEDs",
+    },
+    {
+        "time" : (12,45),
+        "text" : "AABBCC data is seen",
+    },
+    {
+        "time" : (12,50),
+        "comp" : [ "screen", "webcam" ],
+        "clip_size" : { 'webcam' : 800, 'screen' : 1280 },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'screen': (0,0) },
+        "text" : "summary",
+    },
+    {
+        "time" : (13,8),
+        "comp" : [ "screen", "webcam" ],
+        "clip_size" : { 'webcam' : 800, 'screen' : 1280 },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'screen': (0,0) },
+        "text" : "COMMENTS!!!",
+    },
     {
         "time" : (13,15),
-        "comp" : [],
+        "comp" : None,
     },
     ]
 }
