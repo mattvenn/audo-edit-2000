@@ -13,7 +13,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * skip sections - done
 * speed up sections - done
 * have webcam composited in top-right corner of screen cap - done (default)
-* fullscreen webcam for some sections - todo
+* fullscreen webcam for some sections - done
 * generate a youtube compatible TOC - todo
 * full screen titles - todo
 * insert images full screen - todo
