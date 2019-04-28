@@ -1,92 +1,80 @@
 import argparse
+import time
 from moviepy.editor import *
 import logging
 
-from enum import Enum
-class ShotType(Enum):
-    webcam = 1
-    screen_webcam = 2
-    screen = 3
-    speedup = 4
-    cut = 5
-    end = 6
+def get_clip_property(key, shot, clip_name):
+    return shot.get(key, config['sequence_defaults'][key])[clip_name]
 
-# utility for lining up the 2 videos
-def offset(timing, offset):
-    minute = timing[0]
-    second = timing[1]
-    seconds = minute * 60 + second
-    seconds -= offset
-    minute = int(seconds / 60)
-    second = seconds - minute * 60
-    return (minute, second)
+def get_shot_property(key, shot):
+    return shot.get(key, config['sequence_defaults'][key])
 
-def create_sequence(config):
+def create_sequence():
     sequence = config['sequence']
     shot_list = []
 
-    for shot_num in range(len(sequence)):
-        shot = sequence[shot_num]
-        if shot['type'] == ShotType.end.name:
+    for shot_num, shot in enumerate(sequence):
+        if shot_num == len(sequence)-1: # last shot is a placeholder
+            logging.info("last shot")
             break
+
+        logging.info("sequence %02d/%02d" % (shot_num, len(sequence)))
+        
+        comp = get_shot_property('comp', shot)
+        if comp is None:
+            logging.info("skipping shot %d" % shot_num)
+            continue
             
+        # do this to avoid repetition of times in the config file
         shot_start = sequence[shot_num]['time']
         shot_end   = sequence[shot_num+1]['time']
 
-        screen_clip = screen.subclip(offset(shot_start, config['webcam_t_offset']), 
-                                        offset(shot_end, config['webcam_t_offset']))
+        shot_speed = get_shot_property('speed', shot)
+        shot_text  = get_shot_property('text', shot)
 
-        webcam_clip = webcam.subclip(shot_start, shot_end)
+        shot['clips'] = []
+        # get the subclips and configure them
+        for clip_name in comp:
+            clip = config['files'][clip_name]['clip'].subclip(shot_start, shot_end)
+
+            # return defaults if not set
+            clip_size  = get_clip_property('clip_size', shot, clip_name)
+            clip_pos   = get_clip_property('clip_pos' , shot, clip_name)
+
+            logging.info("clip %s set size = %d and position = %s" % (clip_name, clip_size, clip_pos))
+
+            # set size and pos here
+            clip = clip.resize(width=clip_size).set_pos(clip_pos)
+
+            # audio
+            if shot_speed != 1:
+                logging.info("clip %s speed = %d" % (clip_name, shot_speed))
+                clip = clip.without_audio().fx(vfx.speedx, shot_speed) 
+
+            # store the clip in the config
+            shot['clips'].append(clip)
 
         # make a title?
-        title_clip = None
-        if 'text' in shot:
-            logging.info("making title: %s" % shot["text"])
-            title_clip = ( TextClip(shot["text"], fontsize=70, color='white', bg_color='black', font='Arial-Bold')
+        if shot_text is not None:
+            logging.info("making title: %s" % shot_text)
+            title_clip = (TextClip(shot_text, fontsize=70, color='white', bg_color='black', font='Arial-Bold')
                          .set_position("bottom", "center")
-                         .set_duration(config['title_duration']))
+                         .set_duration(get_shot_property('title_duration', shot)))
 
-        # different shot types
-        if shot['type'] == ShotType.cut.name:
-            logging.info("skipping shot %d" % shot_num)
-            pass
+            # put the title in the list of clips to render
+            shot['clips'].append(title_clip)
 
-        elif shot['type'] == ShotType.webcam.name:
-            logging.info("%02d: webcam priority" % shot_num)
-            if title_clip is not None:
-                webcam_clip = webcam_clip.set_pos("center")
-                shot_list.append(CompositeVideoClip([screen_clip, webcam_clip, title_clip]))
-            else:
-                shot_list.append(webcam_clip)
-
-        elif shot['type'] == ShotType.screen_webcam.name:
-            logging.info("%02d: screen + webcam" % shot_num)
-            webcam_x = screen.w - config['webcam_w']
-            webcam_clip = webcam_clip.resize(width=config['webcam_w']).set_pos((webcam_x,0))
-
-            if title_clip is not None:
-                clips = [screen_clip, webcam_clip, title_clip]
-            else:
-                clips = [screen_clip, webcam_clip]
-
-            comp_clip = CompositeVideoClip(clips)
-
-            if "speed" in shot:
-                logging.info("%02d: speedup x %d" % (shot_num, shot['speed'])
-                # remove audio from sped up parts
-                comp_clip = comp_clip.without_audio().fx(vfx.speedx, shot['speed'])
-
-            shot_list.append(comp_clip)
-
-        else:
-            logging.warning("unknown shot type: %s" % shot['type'])
-            exit(1)
+        # composite the clips and store
+        shot['clip'] = CompositeVideoClip(shot['clips'])
     
-    return shot_list
+def preview_transition(index, preview_length=10):
+    clip1 = config['sequence'][index]['clip']
+    clip2 = config['sequence'][index+1]['clip']
+    concatenate_videoclips([clip1, clip2]).subclip(
+                clip1.duration - preview_length/2, clip2.duration + preview_length/2).preview()
 
-def preview_transition(shot_list, index, preview_length=10):
-    concatenate_videoclips([shot_list[index],shot_list[index+1]]).subclip(
-                shot_list[index].duration - preview_length/2, shot_list[index].duration + preview_length/2).preview()
+def preview(index):
+    config['sequence'][index]['clip'].preview()
 
 if __name__ == '__main__':
 
@@ -106,19 +94,29 @@ if __name__ == '__main__':
     except ImportError:
         exit("no sequence.py found in %s" % args.config)
 
-    screen = VideoFileClip(args.config + config['screen']).without_audio()
+    # load the clips
+    for name, file_conf in config['files'].items():
+        logging.info("opening video for file %s" % name)
+        clip = VideoFileClip(args.config + file_conf['file'])
+        clip = clip.subclip(file_conf['start']) # align clips
+        if not file_conf['audio']:
+            logging.info("removing audio for file %s" % name)
+            clip = clip.without_audio()
+        file_conf['clip'] = clip
 
-    webcam = VideoFileClip(args.config + config['webcam'])
+    # using the config, create all the clips and store in config['sequence'][index]['clip']
+    create_sequence()
 
-    shot_list = create_sequence(config)
+    # get all the clips and join them together
+    clips = []
+    for shot in config['sequence']:
+        if 'clip' in shot:
+            clips.append(shot['clip'])
+    final = concatenate_videoclips(clips)
 
     import ipdb; ipdb.set_trace()
 
-
-    exit(0)
-    import time
     logging.info("rendering")
     start_time = time.time()
-    result = concatenate_videoclips(shot_list)
-    result.write_videofile("rendered.mp4",fps=20)
+    final.write_videofile("rendered.mp4",fps=20)
     logging.info("finished rendering in %d seconds" % (time.time() - start_time))
