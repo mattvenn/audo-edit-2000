@@ -3,6 +3,7 @@ import time
 from moviepy.editor import *
 import logging
 
+# utilities to get defaults for missing keys in the config
 def get_clip_property(key, shot, clip_name):
     return shot.get(key, config['sequence_defaults'][key])[clip_name]
 
@@ -83,6 +84,7 @@ def create_sequence():
         # composite the clips and store
         shot['clip'] = CompositeVideoClip(shot['clips'])
     
+# useful functions for previewing the clips and transitions
 def preview_transition(index, preview_length=10):
     clip1 = config['sequence'][index]['clip']
     clip2 = config['sequence'][index+1]['clip']
@@ -97,7 +99,7 @@ def print_sections():
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_comp  = get_shot_property('comp', shot)
-        logging.info("%02d : %s %s %s" % (shot_num, shot_text, shot_speed, shot_comp ))
+        logging.info("%02d : %s %s %s %s" % (shot_num, shot['clip'].duration, shot_text, shot_speed, shot_comp ))
 
 if __name__ == '__main__':
 
@@ -134,7 +136,7 @@ if __name__ == '__main__':
     for shot in config['sequence']:
         if 'clip' in shot:
             clips.append(shot['clip'])
-    final = concatenate_videoclips(clips).subclip(20,24)
+    final = concatenate_videoclips(clips)
 
     import ipdb; ipdb.set_trace()
 
