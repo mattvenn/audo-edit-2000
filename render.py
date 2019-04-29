@@ -28,13 +28,13 @@ def create_sequence():
     sequence = config['sequence']
     shot_list = []
 
-    for shot_num, shot in enumerate(sequence[0:-1]):
-        logging.info("sequence %02d/%02d" % (shot_num, len(sequence)))
+    for shot_num, shot in enumerate(sequence[0:-1]): # last item in sequence is 'end' placeholder
+        logging.info("sequence %02d/%02d" % (shot_num+1, len(sequence)-1))
         
         comp = get_shot_property('comp', shot)
         if comp is None:
             shot['shot_duration'] = 0
-            logging.info("skipping shot %d" % shot_num)
+            logging.info("skipping shot %d" % (shot_num+1))
             continue
             
         # do this to avoid repetition of times in the config file
@@ -112,9 +112,9 @@ def print_sections():
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_duration  = get_shot_property('duration', shot)
-        logging.info("%02d : runtime %s length %s text: %s speed: %s" % (shot_num, sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
+        logging.info("%02d : runtime %s length %s text: %s speed: %s" % (shot_num+1, sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
         run_time += shot_duration
-    logging.info("total duration = %.1f" % run_time)
+    logging.info("total duration = %s" % sec_to_min(run_time))
 
 if __name__ == '__main__':
 
@@ -159,10 +159,10 @@ if __name__ == '__main__':
         if 'clip' in shot:
             clips.append(shot['clip'])
 
-    final = concatenate_videoclips(clips)
     import ipdb; ipdb.set_trace()
+    final = concatenate_videoclips(clips)
 
     logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
-    final.write_videofile(config['outfile'], fps=20)
-    logging.info("finished rendering in %d seconds" % (time.time() - start_time))
+    final.write_videofile(config['outfile'], fps=20, threads=4)
+    logging.info("finished rendering in %s" % sec_to_min(time.time() - start_time))
