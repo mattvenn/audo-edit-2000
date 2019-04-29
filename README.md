@@ -14,10 +14,11 @@ I'm building this tool to make it easier to create and publish howto style video
 * speed up sections - done
 * have webcam composited in top-right corner of screen cap - done (default)
 * fullscreen webcam for some sections - done
+* insert images full screen - done
+* position of titles - done
 * generate a youtube compatible TOC - todo
 * full screen titles - todo
-* position of titles - done
-* insert images full screen - todo
+* fade titles or have some nicer transition
 
 # todo
 
