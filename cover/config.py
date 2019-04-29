@@ -30,6 +30,7 @@ config = {
         "text" : None,
         "text_vpos" : "bottom",
         "title_duration" : 5, # how long to show titles
+        "title_fade_duration" : 0.4, # how long to fade in and out the titles
         "duration" : 0, # duration of the final clip
         "speed": 1,
     },

@@ -2,6 +2,7 @@ import argparse
 import time
 from moviepy.editor import *
 import logging
+import numpy as np
 
 # utilities to get defaults for missing keys in the config
 def get_clip_property(key, shot, clip_name):
@@ -43,6 +44,7 @@ def create_sequence():
 
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
+        shot_title_fade_duration  = get_shot_property('title_fade_duration', shot)
         shot_text_vpos = get_shot_property('text_vpos', shot)
 
         shot['clips'] = []
@@ -83,6 +85,14 @@ def create_sequence():
             title_clip = (TextClip(shot_text, fontsize=70, color='white', bg_color='black', font='Arial-Bold')
                          .set_position(shot_text_vpos, "center")
                          .set_duration(get_shot_property('title_duration', shot)))
+
+            # fade it in and out?
+            if shot_title_fade_duration != 0:
+                arr = np.ones((title_clip.h,title_clip.w))
+                mask = ImageClip(arr, ismask=True, duration=title_clip.duration)
+                mask = mask.fx(vfx.fadein, shot_title_fade_duration, initial_color=0). \
+                            fx(vfx.fadeout, shot_title_fade_duration, final_color=0)
+                title_clip = title_clip.set_mask(mask)
 
             # put the title in the list of clips to render
             shot['clips'].append(title_clip)

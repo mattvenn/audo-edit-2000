@@ -15,10 +15,10 @@ I'm building this tool to make it easier to create and publish howto style video
 * have webcam composited in top-right corner of screen cap - done (default)
 * fullscreen webcam for some sections - done
 * insert images full screen - done
+* fade titles or have some nicer transition - done
 * position of titles - done
 * generate a youtube compatible TOC - todo
 * full screen titles - todo
-* fade titles or have some nicer transition
 
 # todo
 
@@ -26,6 +26,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * start the recordings together to avoid having to correct in the sequencer
 * video links don't work for TOC
 * command line args to choose videos/config to use
+* record webcam tool seems to make audio sync out by about 0.1 second
 
 # project notes
 
