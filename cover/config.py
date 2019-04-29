@@ -4,35 +4,42 @@ config = {
     {
             'webcam' :
             { 
+                'type' : 'video',
                 'file' : 'cover-webcam.mkv', #  1280 x 800
                 'start': 0,
                 'audio': True,
             },
             'screen' :
             {
-                'file' :'cover-screen.mkv', # 800 x 600
+                'type' : 'video',
+                'file' : 'cover-screen.mkv', # 800 x 600
                 'start': 1.5,
                 'audio': False,
             },
+            'background'   :
+            {
+                'file' : 'fpga-numbers.jpg',
+                'type' : 'image',
+            },
     },
-#        'pic1'   : 'test.png',
     'sequence_defaults' :
     {
         "comp" : [ 'screen', 'webcam' ],
-        'clip_size' : { 'webcam' : 400, 'screen' : 1280 }, # desired width of video clips
-        'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0) },
+        'clip_size' : { 'webcam' : 400, 'screen' : 1280, 'background' : 1280 }, # desired width of video clips
+        'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
         "text_vpos" : "bottom",
-        "title_duration" : 5,
+        "title_duration" : 5, # how long to show titles
+        "duration" : 0, # duration of the final clip
         "speed": 1,
     },
     ##########################################################
     'sequence' : [
     {
         "time" : (0,12),
-        "comp" : [ "screen", "webcam" ],
-        "clip_size" : { 'webcam' : 800, 'screen' : 1280 },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'screen': (0,0) },
+        "comp" : [ "background", "webcam" ],
+        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "intro to cover",
     },
     {
@@ -48,7 +55,7 @@ config = {
         "text" : "gtkwave",
     },
     {
-        "time" : (2,40),
+        "time" : (2,35),
         "text" : "4 LEDs parameter",
     },
     {
@@ -74,11 +81,11 @@ config = {
         "text" : "makefile",
     },
     {
-        "time" : (5,22),
+        "time" : (5,14),
         "text" : "run cover with sby",
     },
     {
-        "time" : (5,30),
+        "time" : (5,24),
         "text" : "cover fails",
     },
     {
@@ -104,7 +111,7 @@ config = {
         "text" : "webpage...",
     },
     {
-        "time" : (8,50),
+        "time" : (8,55),
         "text" : "cover reached",
     },
     {
@@ -112,10 +119,14 @@ config = {
         "comp" : [ "screen" ],
         "text" : "where did that trace get written?",
         "text_vpos" : "top",
+        "title_duration" : 3,
         "speed" : 3,
     },
     {
         "time" : (9,24),
+    },
+    {
+        "time" : (9,35),
         "text" : "makefile ORing",
     },
     {
@@ -123,33 +134,33 @@ config = {
         "text" : "append steps",
     },
     {
-        "time" : (11,15),
+        "time" : (11,20),
         "text" : "cover LED data",
     },
     {
-        "time" : (11,50),
+        "time" : (12,00),
         "text" : "write signal is now toggling",
     },
     {
-        "time" : (12,26),
+        "time" : (12,23),
         "text" : "2 LEDs",
     },
     {
-        "time" : (12,45),
+        "time" : (12,41),
         "text" : "AABBCC data is seen",
     },
     {
-        "time" : (12,50),
-        "comp" : [ "screen", "webcam" ],
-        "clip_size" : { 'webcam' : 800, 'screen' : 1280 },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'screen': (0,0) },
+        "time" : (12,45),
+        "comp" : [ "background", "webcam" ],
+        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "summary",
     },
     {
         "time" : (13,8),
-        "comp" : [ "screen", "webcam" ],
-        "clip_size" : { 'webcam' : 800, 'screen' : 1280 },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'screen': (0,0) },
+        "comp" : [ "background", "webcam" ],
+        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "COMMENTS!!!",
     },
     {
