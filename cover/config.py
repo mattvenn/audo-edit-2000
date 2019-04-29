@@ -148,6 +148,7 @@ config = {
     {
         "time" : (12,41),
         "text" : "AABBCC data is seen",
+        "title_duration" : 3,
     },
     {
         "time" : (12,45),
