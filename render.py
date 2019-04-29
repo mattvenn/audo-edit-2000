@@ -20,15 +20,15 @@ def offset(timing, offset):
     second = seconds - minute * 60
     return (minute, second)
 
+# return seconds
+def get_shot_duration(start, end):
+    return (end[0] * 60 + end[1]) - (start[0] * 60 + start[1])
+
 def create_sequence():
     sequence = config['sequence']
     shot_list = []
 
-    for shot_num, shot in enumerate(sequence):
-        if shot_num == len(sequence)-1: # last shot is a placeholder
-            logging.info("last shot")
-            break
-
+    for shot_num, shot in enumerate(sequence[0:-1]):
         logging.info("sequence %02d/%02d" % (shot_num, len(sequence)))
         
         comp = get_shot_property('comp', shot)
@@ -48,12 +48,17 @@ def create_sequence():
         shot['clips'] = []
         # get the subclips and configure them
         for clip_name in comp:
-            clip_offset = config['files'][clip_name]['start']
-            offset_start = offset(shot_start, clip_offset)
-            offset_end   = offset(shot_end,   clip_offset)
-            clip = config['files'][clip_name]['clip'].subclip(offset_start, offset_end)
-            logging.debug("clip %s start/end %s %s adj start/end %s %s" % 
+            clip_type = config['files'][clip_name]['type']
+            if clip_type == 'video':
+                clip_offset = config['files'][clip_name]['start']
+                offset_start = offset(shot_start, clip_offset)
+                offset_end   = offset(shot_end,   clip_offset)
+                clip = config['files'][clip_name]['clip'].subclip(offset_start, offset_end)
+                logging.debug("clip %s start/end %s %s adj start/end %s %s" % 
                              (clip_name, shot_start, shot_end, offset_start, offset_end))
+                
+            elif clip_type == 'image':
+                clip = config['files'][clip_name]['clip'].set_duration(get_shot_duration(shot_start, shot_end))
 
             # return defaults if not set
             clip_size  = get_clip_property('clip_size', shot, clip_name)
@@ -71,7 +76,6 @@ def create_sequence():
 
             # store the clip in the config
             shot['clips'].append(clip)
-        
 
         # make a title?
         if shot_text is not None:
@@ -97,15 +101,20 @@ def preview_transition(index, preview_length=10):
 def preview(index):
     config['sequence'][index]['clip'].preview()
 
+def sec_to_min(seconds):
+    minutes = int(seconds / 60)
+    seconds = seconds - minutes * 60
+    return "%02d:%02d" % (minutes, seconds)
+
 def print_sections():
     run_time = 0
-    for shot_num, shot in enumerate(config['sequence']):
+    for shot_num, shot in enumerate(config['sequence'][0:-1]):
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
-        shot_comp  = get_shot_property('comp', shot)
         shot_duration  = get_shot_property('duration', shot)
-        logging.info("%02d : %s %s %s %s %s" % (shot_num, shot_duration, run_time, shot_text, shot_speed, shot_comp ))
+        logging.info("%02d : runtime %s length %s text: %s speed: %s" % (shot_num, sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
         run_time += shot_duration
+    logging.info("total duration = %.1f" % run_time)
 
 if __name__ == '__main__':
 
@@ -127,11 +136,18 @@ if __name__ == '__main__':
 
     # load the clips
     for name, file_conf in config['files'].items():
-        logging.info("opening video for file %s" % name)
-        clip = VideoFileClip(args.config + file_conf['file'])
-        if not file_conf['audio']:
-            logging.info("removing audio for file %s" % name)
-            clip = clip.without_audio()
+        if file_conf['type'] == 'video':
+            logging.info("opening video for file %s" % name)
+            clip = VideoFileClip(args.config + file_conf['file'])
+            if not file_conf['audio']:
+                logging.info("removing audio for file %s" % name)
+                clip = clip.without_audio()
+        elif file_conf['type'] == 'image':
+            logging.info("opening image for file %s" % name)
+            clip = ImageClip(args.config + file_conf['file'])
+        else:
+            logger.warning("no such file type %s" % file_conf['type'])
+            exit(1)
         file_conf['clip'] = clip
 
     # using the config, create all the clips and store in config['sequence'][index]['clip']
@@ -142,8 +158,8 @@ if __name__ == '__main__':
     for shot in config['sequence']:
         if 'clip' in shot:
             clips.append(shot['clip'])
-    final = concatenate_videoclips(clips)
 
+    final = concatenate_videoclips(clips)
     import ipdb; ipdb.set_trace()
 
     logging.info("rendering to %s" % config['outfile'])
