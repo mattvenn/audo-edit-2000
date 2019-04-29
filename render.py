@@ -33,6 +33,7 @@ def create_sequence():
         
         comp = get_shot_property('comp', shot)
         if comp is None:
+            shot['shot_duration'] = 0
             logging.info("skipping shot %d" % shot_num)
             continue
             
@@ -42,6 +43,7 @@ def create_sequence():
 
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
+        shot_text_vpos = get_shot_property('text_vpos', shot)
 
         shot['clips'] = []
         # get the subclips and configure them
@@ -75,7 +77,7 @@ def create_sequence():
         if shot_text is not None:
             logging.info("making title: %s" % shot_text)
             title_clip = (TextClip(shot_text, fontsize=70, color='white', bg_color='black', font='Arial-Bold')
-                         .set_position("bottom", "center")
+                         .set_position(shot_text_vpos, "center")
                          .set_duration(get_shot_property('title_duration', shot)))
 
             # put the title in the list of clips to render
@@ -83,6 +85,7 @@ def create_sequence():
 
         # composite the clips and store
         shot['clip'] = CompositeVideoClip(shot['clips'])
+        shot['duration'] = shot['clip'].duration
     
 # useful functions for previewing the clips and transitions
 def preview_transition(index, preview_length=10):
@@ -95,11 +98,14 @@ def preview(index):
     config['sequence'][index]['clip'].preview()
 
 def print_sections():
+    run_time = 0
     for shot_num, shot in enumerate(config['sequence']):
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_comp  = get_shot_property('comp', shot)
-        logging.info("%02d : %s %s %s %s" % (shot_num, shot['clip'].duration, shot_text, shot_speed, shot_comp ))
+        shot_duration  = get_shot_property('duration', shot)
+        logging.info("%02d : %s %s %s %s %s" % (shot_num, shot_duration, run_time, shot_text, shot_speed, shot_comp ))
+        run_time += shot_duration
 
 if __name__ == '__main__':
 

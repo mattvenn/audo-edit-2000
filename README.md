@@ -16,6 +16,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * fullscreen webcam for some sections - done
 * generate a youtube compatible TOC - todo
 * full screen titles - todo
+* position of titles - done
 * insert images full screen - todo
 
 # todo

@@ -22,6 +22,7 @@ config = {
         'clip_size' : { 'webcam' : 400, 'screen' : 1280 }, # desired width of video clips
         'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0) },
         "text" : None,
+        "text_vpos" : "bottom",
         "title_duration" : 5,
         "speed": 1,
     },
@@ -108,7 +109,9 @@ config = {
     },
     {
         "time" : (9,9),
+        "comp" : [ "screen" ],
         "text" : "where did that trace get written?",
+        "text_vpos" : "top",
         "speed" : 3,
     },
     {
