@@ -19,6 +19,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * position of titles - done
 * generate a youtube compatible TOC - todo
 * full screen titles - todo
+* put font/threads into config - todo
 
 # todo
 
