@@ -82,7 +82,7 @@ def create_sequence():
         # make a title?
         if shot_text is not None:
             logging.info("making title: %s" % shot_text)
-            title_clip = (TextClip(shot_text, fontsize=70, color='white', bg_color='black', font='Arial-Bold')
+            title_clip = (TextClip(shot_text, fontsize=70, color='white', bg_color='gray', font='D-Din')
                          .set_position(shot_text_vpos, "center")
                          .set_duration(get_shot_property('title_duration', shot)))
 
