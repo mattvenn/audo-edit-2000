@@ -34,9 +34,10 @@ def create_sequence():
     for shot_num, shot in enumerate(sequence[0:-1]): # last item in sequence is 'end' placeholder
         logging.info("sequence %02d/%02d" % (shot_num+1, len(sequence)-1))
         
-        if shot_num == args.max_shot - 1:
-            logging.info("ending early due to --max-shot")
-            break
+        if args.max_shot is not None:
+            if shot_num == args.max_shot - 1:
+                logging.info("ending early due to --max-shot")
+                break
 
         comp = get_shot_property('comp', shot)
         if comp is None:
