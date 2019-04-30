@@ -47,3 +47,11 @@ video sync how to do it?
 
 gave up on recordmydesktop, too long a wait after recording without onthefly encoding, but too variable a framerate with onthefly encoding. using ffmpeg instead.
 
+# Tue 30 Apr 19:42:14 CEST 2019
+
+investigating why moviepy corrupts some video files with show/load/write/preview. only a problem on the screen capture.
+
+but then doing another capture with same record tool and can preview fine.
+does work on my old laptop at home. versions?
+work pc: moviepy version '0.2.3.2', ffmpeg 2.8.15,  139c49acce8f7465d04fa671df6d02  cover/cover-screen.mkv
+
