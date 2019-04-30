@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+import sys
 import argparse
 import time
 from moviepy.editor import *
@@ -32,6 +34,10 @@ def create_sequence():
     for shot_num, shot in enumerate(sequence[0:-1]): # last item in sequence is 'end' placeholder
         logging.info("sequence %02d/%02d" % (shot_num+1, len(sequence)-1))
         
+        if shot_num == args.max_shot - 1:
+            logging.info("ending early due to --max-shot")
+            break
+
         comp = get_shot_property('comp', shot)
         if comp is None:
             shot['shot_duration'] = 0
@@ -130,6 +136,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="simple automated video editing")
     parser.add_argument('--config', required=True, help="directory that contains the config.py configuration file")
+    parser.add_argument('--max-shot', type=int, help="process up to this number of shots in the sequence")
     parser.add_argument("-v", "--verbose", dest="verbose_count",
                             action="count", default=1,
                             help="increases log verbosity for each occurence.")
@@ -174,5 +181,5 @@ if __name__ == '__main__':
 
     logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
-    final.write_videofile(config['outfile'], fps=20, threads=4)
+    final.write_videofile(config['outfile'], fps=20, threads=4) # audio_fps=44100,codec = 'libx264'
     logging.info("finished rendering in %s" % sec_to_min(time.time() - start_time))
