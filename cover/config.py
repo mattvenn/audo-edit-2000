@@ -18,7 +18,7 @@ config = {
             },
             'background'   :
             {
-                'file' : 'fpga-numbers.jpg',
+                'file' : 'fpga-vga.jpg',
                 'type' : 'image',
             },
     },
@@ -100,7 +100,7 @@ config = {
         "speed" : 5,
     },
     {
-        "time" : (7,05),
+        "time" : (7,5),
         "text" : "ws2812 timing",
     },
     {
