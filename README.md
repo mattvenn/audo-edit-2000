@@ -53,5 +53,6 @@ investigating why moviepy corrupts some video files with show/load/write/preview
 
 but then doing another capture with same record tool and can preview fine.
 does work on my old laptop at home. versions?
-work pc: moviepy version '0.2.3.2', ffmpeg 2.8.15,  139c49acce8f7465d04fa671df6d02  cover/cover-screen.mkv
+workshop pc: moviepy version '0.2.3.2', ffmpeg 2.8.15,      139c49acce8f7465d04fa671df6d02  cover/cover-screen.mkv
+laptop:      moviepy version '1.0.0',   ffmpeg 3.4.4-0,     0a139c49acce8f7465d04fa671df6d03
 
