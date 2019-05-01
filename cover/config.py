@@ -7,7 +7,7 @@ config = {
                 'type' : 'video',
                 'file' : 'cover-webcam.mkv', #  1280 x 800
                 'start': 0,
-                'audio': True,
+                'audio': 'cover-webcam.wav',
             },
             'screen' :
             {

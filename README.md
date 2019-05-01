@@ -17,7 +17,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * insert images full screen - done
 * fade titles or have some nicer transition - done
 * position of titles - done
-* generate a youtube compatible TOC - todo
+* generate a youtube compatible TOC - done
 * full screen titles - todo
 * put font/threads into config - todo
 
