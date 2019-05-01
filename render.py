@@ -143,6 +143,8 @@ def print_youtube_toc():
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_duration  = get_shot_property('duration', shot)
+        if shot_duration == 0 or shot_text == None:
+            continue
         print("%s %s" % (sec_to_min(run_time), shot_text))
         run_time += shot_duration
 
