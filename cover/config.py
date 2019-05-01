@@ -29,8 +29,9 @@ config = {
         'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
         "text_vpos" : "bottom",
-        "title_duration" : 5, # how long to show titles
-        "title_fade_duration" : 0.4, # how long to fade in and out the titles
+        "text_size" : 70,
+        "text_duration" : 5, # how long to show texts
+        "text_fade_duration" : 0.4, # how long to fade in and out the texts
         "duration" : 0, # duration of the final clip
         "speed": 1,
     },
@@ -120,7 +121,7 @@ config = {
         "comp" : [ "screen" ],
         "text" : "where did that trace get written?",
         "text_vpos" : "top",
-        "title_duration" : 3,
+        "text_duration" : 3,
         "speed" : 3,
     },
     {
@@ -149,7 +150,7 @@ config = {
     {
         "time" : (12,41),
         "text" : "AABBCC data is seen",
-        "title_duration" : 3,
+        "text_duration" : 3,
     },
     {
         "time" : (12,45),

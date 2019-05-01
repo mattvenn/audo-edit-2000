@@ -51,7 +51,7 @@ def create_sequence():
 
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
-        shot_title_fade_duration  = get_shot_property('title_fade_duration', shot)
+        shot_text_fade_duration  = get_shot_property('text_fade_duration', shot)
         shot_text_vpos = get_shot_property('text_vpos', shot)
 
         shot['clips'] = []
@@ -86,23 +86,24 @@ def create_sequence():
             # store the clip in the config
             shot['clips'].append(clip)
 
-        # make a title?
+        # make some text?
         if shot_text is not None:
-            logging.info("making title: %s" % shot_text)
-            title_clip = (TextClip(shot_text, fontsize=70, color='white', bg_color='gray', font='D-Din')
+            logging.info("making text: %s" % shot_text)
+            text_size = get_shot_property('text_size', shot)
+            text_clip = (TextClip(shot_text, fontsize=text_size, color='white', bg_color='gray', font='D-Din')
                          .set_position(shot_text_vpos, "center")
-                         .set_duration(get_shot_property('title_duration', shot)))
+                         .set_duration(get_shot_property('text_duration', shot)))
 
             # fade it in and out?
-            if shot_title_fade_duration != 0:
-                arr = np.ones((title_clip.h,title_clip.w))
-                mask = ImageClip(arr, ismask=True, duration=title_clip.duration)
-                mask = mask.fx(vfx.fadein, shot_title_fade_duration, initial_color=0). \
-                            fx(vfx.fadeout, shot_title_fade_duration, final_color=0)
-                title_clip = title_clip.set_mask(mask)
+            if shot_text_fade_duration != 0:
+                arr = np.ones((text_clip.h,text_clip.w))
+                mask = ImageClip(arr, ismask=True, duration=text_clip.duration)
+                mask = mask.fx(vfx.fadein, shot_text_fade_duration, initial_color=0). \
+                            fx(vfx.fadeout, shot_text_fade_duration, final_color=0)
+                text_clip = text_clip.set_mask(mask)
 
-            # put the title in the list of clips to render
-            shot['clips'].append(title_clip)
+            # put the text in the list of clips to render
+            shot['clips'].append(text_clip)
 
         # composite the clips and store
         shot['clip'] = CompositeVideoClip(shot['clips'])
@@ -160,6 +161,13 @@ if __name__ == '__main__':
             if not file_conf['audio']:
                 logging.info("removing audio for file %s" % name)
                 clip = clip.without_audio()
+            elif file_conf['audio'] is True:
+                logging.info("using audio in file %s" % name)
+            else:
+                logging.info("using audio in file %s" % file_conf['audio'])
+                audio = AudioFileClip(args.config + file_conf['audio'])
+                clip = clip.set_audio(audio)
+                
         elif file_conf['type'] == 'image':
             logging.info("opening image for file %s" % name)
             clip = ImageClip(args.config + file_conf['file'])
