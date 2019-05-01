@@ -13,7 +13,7 @@ config = {
             {
                 'type' : 'video',
                 'file' : 'yosys-show-screen.mkv', # 800 x 600
-                'start': 1.5,
+                'start': 2.25, # was 1.5. vlc adjusted -0.75s (hastened)
                 'audio': False,
             },
             'background'   :
