@@ -7,7 +7,7 @@ config = {
                 'type' : 'video',
                 'file' : 'yosys-show-webcam.mkv', #  1280 x 800
                 'start': 0,
-                'audio': True,
+                'audio': 'yosys-show-webcam.wav',
             },
             'screen' :
             {
@@ -29,8 +29,9 @@ config = {
         'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
         "text_vpos" : "bottom",
-        "title_duration" : 5, # how long to show titles
-        "title_fade_duration" : 0.4, # how long to fade in and out the titles
+        "text_size" : 70,
+        "text_duration" : 5, # how long to show text
+        "text_fade_duration" : 0.4, # how long to fade in and out the text
         "duration" : 0, # duration of the final clip
         "speed": 1,
     },
@@ -45,6 +46,7 @@ config = {
     },
     {
         "time" : (0,38),
+        "text_size" : 50,
         "text" : "github.com/mattvenn/icestick-multisegment",
     },
     {
@@ -52,8 +54,9 @@ config = {
         "text" : "multisegment LED",
     },
     {
-        "time" : (1,22),
+        "time" : (1,21),
         "text" : "make and prog",
+        "text_duration" : 3, # how long to show text
     },
     {
         "time" : (1,25),
@@ -64,6 +67,7 @@ config = {
     },
     {
         "time" : (1,33),
+        "text_duration" : 4, # how long to show text
     },
     {
         "time" : (1,38),
@@ -79,7 +83,6 @@ config = {
     },
     {
         "time" : (2,18),
-        "comp" : [ "screen" ],
         "text" : "output",
     },
     {
@@ -88,6 +91,9 @@ config = {
     },
     {
         "time" : (3,40),
+        "comp" : [ "background", "webcam" ],
+        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "summary",
     },
     {
