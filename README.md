@@ -21,6 +21,13 @@ I'm building this tool to make it easier to create and publish howto style video
 * full screen titles - todo
 * put font/threads into config - todo
 
+# requirements
+
+* apt-get install imagemagick
+* pip install moviepy
+* install D-Din font: https://medium.com/source-words/how-to-manually-install-update-and-uninstall-fonts-on-linux-a8d09a3853b0
+* imagemagick policy: https://github.com/Zulko/moviepy/issues/693
+
 # todo
 
 * can't preview the transitions because of errors with moviepy. get errors very similar to this: https://github.com/Zulko/moviepy/issues/863, if audio is removed, preview works
