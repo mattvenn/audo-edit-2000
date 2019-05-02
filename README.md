@@ -63,3 +63,15 @@ does work on my old laptop at home. versions?
 workshop pc: moviepy version '0.2.3.2', ffmpeg 2.8.15,      139c49acce8f7465d04fa671df6d02  cover/cover-screen.mkv
 laptop:      moviepy version '1.0.0',   ffmpeg 3.4.4-0,     0a139c49acce8f7465d04fa671df6d03
 
+# Thu  2 May 11:21:04 CEST 2019
+
+tried with digitalocean 16 core (set threads to 16 ffmpeg):
+had to install font and change name to D\-Din
+didn't seem to use many cores, maybe 2. 13% reported by digital ocean metrics
+auto installed some special kind of ffmpeg: ~/.imageio/ffmpeg/ffmpeg-linux64-v3.3.1 -version
+ffmpeg version N-86111-ga441aa90e8-static http://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2017 the FFmpeg developers
+
+* yosys show took 2:29.
+* cover took 7:22
+
+videos were undistorted!
