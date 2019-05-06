@@ -1,5 +1,5 @@
 config = {
-    'outfile': 'yosys-show/show.mp3',
+    'outfile': 'yosys-show/show.mp4',
     'files': 
     {
             'webcam' :
