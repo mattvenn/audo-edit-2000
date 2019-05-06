@@ -75,3 +75,8 @@ ffmpeg version N-86111-ga441aa90e8-static http://johnvansickle.com/ffmpeg/  Copy
 * cover took 7:22
 
 videos were undistorted!
+
+# Mon  6 May 20:00:51 CEST 2019
+
+tried with docker. yosys show took 2:19
+

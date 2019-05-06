@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 import argparse
 import time
 from moviepy.editor import *
@@ -151,7 +150,7 @@ def print_youtube_toc():
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="simple automated video editing")
-    parser.add_argument('--config', required=True, help="directory that contains the config.py configuration file")
+    parser.add_argument('--config', required=True, help="config.py configuration file")
     parser.add_argument('--max-shot', type=int, help="process up to this number of shots in the sequence")
     parser.add_argument("-v", "--verbose", dest="verbose_count",
                             action="count", default=1,
@@ -161,17 +160,19 @@ if __name__ == '__main__':
     log_level = max(3 - args.verbose_count, 0) * 10
     logging.basicConfig(level=log_level, format='%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
-    sys.path.append(args.config)
+    import runpy
     try:
-        from config import config
-    except ImportError:
-        exit("no sequence.py found in %s" % args.config)
+        config = runpy.run_path(args.config)['config']
+    except IOError:
+        exit("no config file found %s" % args.config)
+    except KeyError:
+        exit("no config defined in %s" % args.config)
 
     # load the clips
     for name, file_conf in config['files'].items():
         if file_conf['type'] == 'video':
             logging.info("opening video for file %s" % name)
-            clip = VideoFileClip(args.config + file_conf['file'])
+            clip = VideoFileClip(file_conf['file'])
             if not file_conf['audio']:
                 logging.info("removing audio for file %s" % name)
                 clip = clip.without_audio()
@@ -179,12 +180,12 @@ if __name__ == '__main__':
                 logging.info("using audio in file %s" % name)
             else:
                 logging.info("using audio in file %s" % file_conf['audio'])
-                audio = AudioFileClip(args.config + file_conf['audio'])
+                audio = AudioFileClip(file_conf['audio'])
                 clip = clip.set_audio(audio)
                 
         elif file_conf['type'] == 'image':
             logging.info("opening image for file %s" % name)
-            clip = ImageClip(args.config + file_conf['file'])
+            clip = ImageClip(file_conf['file'])
         else:
             logger.warning("no such file type %s" % file_conf['type'])
             exit(1)

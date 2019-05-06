@@ -1,24 +1,24 @@
 config = {
-    'outfile': 'show.mp4',
+    'outfile': 'yosys-show/show.mp3',
     'files': 
     {
             'webcam' :
             { 
                 'type' : 'video',
-                'file' : 'yosys-show-webcam.mkv', #  1280 x 800
+                'file' : 'yosys-show/yosys-show-webcam.mkv', #  1280 x 800
                 'start': 0,
-                'audio': 'yosys-show-webcam.wav',
+                'audio': 'yosys-show/yosys-show-webcam.wav',
             },
             'screen' :
             {
                 'type' : 'video',
-                'file' : 'yosys-show-screen.mkv', # 800 x 600
+                'file' : 'yosys-show/yosys-show-screen.mkv', # 800 x 600
                 'start': 2.25, # was 1.5. vlc adjusted -0.75s (hastened)
                 'audio': False,
             },
             'background'   :
             {
-                'file' : 'ice40-die.jpeg',
+                'file' : 'yosys-show/ice40-die.jpeg',
                 'type' : 'image',
             },
     },

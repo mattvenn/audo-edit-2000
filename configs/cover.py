@@ -1,24 +1,24 @@
 config = {
-    'outfile': 'cover.mp4',
+    'outfile': 'cover/cover.mp4',
     'files': 
     {
             'webcam' :
             { 
                 'type' : 'video',
-                'file' : 'cover-webcam.mkv', #  1280 x 800
+                'file' : 'cover/cover-webcam.mkv', #  1280 x 800
                 'start': 0,
-                'audio': 'cover-webcam.wav',
+                'audio': 'cover/cover-webcam.wav',
             },
             'screen' :
             {
                 'type' : 'video',
-                'file' : 'cover-screen.mkv', # 800 x 600
+                'file' : 'cover/cover-screen.mkv', # 800 x 600
                 'start': 1.5,
                 'audio': False,
             },
             'background'   :
             {
-                'file' : 'fpga-vga.jpg',
+                'file' : 'cover/fpga-vga.jpg',
                 'type' : 'image',
             },
     },
