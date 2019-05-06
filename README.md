@@ -86,3 +86,5 @@ docker run -v /root/vids:/auto-edit-2000/yosys-show -ti mattvenn/moviepy:install
 then cd /home/moviepy/auto-edit-2000
 git pull
 python render.py --config configs/yosys-show.py
+
+worked once or twice, then always ffmpeg dies with no error. 
