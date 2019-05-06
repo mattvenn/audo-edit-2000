@@ -152,6 +152,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="simple automated video editing")
     parser.add_argument('--config', required=True, help="config.py configuration file")
     parser.add_argument('--max-shot', type=int, help="process up to this number of shots in the sequence")
+    parser.add_argument('--interactive')
     parser.add_argument("-v", "--verbose", dest="verbose_count",
                             action="count", default=1,
                             help="increases log verbosity for each occurence.")
@@ -200,7 +201,9 @@ if __name__ == '__main__':
         if 'clip' in shot:
             clips.append(shot['clip'])
 
-    import ipdb; ipdb.set_trace()
+    if args.interactive:
+        import ipdb; ipdb.set_trace()
+
     final = concatenate_videoclips(clips)
 
     logging.info("rendering to %s" % config['outfile'])
