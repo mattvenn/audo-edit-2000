@@ -79,4 +79,10 @@ videos were undistorted!
 # Mon  6 May 20:00:51 CEST 2019
 
 tried with docker. yosys show took 2:19
+use digital-ocean-api and moviepy_setup.sh to get docker installed and latest docker setup
+scp all the videos files to /root/vids
+docker run -v /root/vids:/auto-edit-2000/yosys-show -ti mattvenn/moviepy:install_3 /bin/bash
 
+then cd /home/moviepy/auto-edit-2000
+git pull
+python render.py --config configs/yosys-show.py
