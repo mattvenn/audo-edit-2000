@@ -80,11 +80,13 @@ videos were undistorted!
 
 tried with docker. yosys show took 2:19
 use digital-ocean-api and moviepy_setup.sh to get docker installed and latest docker setup
-scp all the videos files to /root/vids
-docker run -v /root/vids:/auto-edit-2000/yosys-show -ti mattvenn/moviepy:install_3 /bin/bash
+scp -r yosys-show root@xxx:~/
+
+on new machine:
+
+docker run -v ~/yosys-show:/yosys-show -ti mattvenn/moviepy:install_3 /bin/bash
 
 then cd /home/moviepy/auto-edit-2000
 git pull
+ln -s /yosys-show
 python render.py --config configs/yosys-show.py
-
-worked once or twice, then always ffmpeg dies with no error. 
