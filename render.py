@@ -50,6 +50,7 @@ def create_sequence():
 
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
+        show_text  = get_shot_property('show_text', shot)
         shot_text_fade_duration  = get_shot_property('text_fade_duration', shot)
         shot_text_vpos = get_shot_property('text_vpos', shot)
 
@@ -86,7 +87,7 @@ def create_sequence():
             shot['clips'].append(clip)
 
         # make some text?
-        if shot_text is not None:
+        if show_text:
             logging.info("making text: %s" % shot_text)
             text_size = get_shot_property('text_size', shot)
             text_clip = (TextClip(shot_text, fontsize=text_size, color='white', bg_color='gray', font='D-Din')
@@ -152,7 +153,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="simple automated video editing")
     parser.add_argument('--config', required=True, help="config.py configuration file")
     parser.add_argument('--max-shot', type=int, help="process up to this number of shots in the sequence")
-    parser.add_argument('--interactive')
+    parser.add_argument('--interactive', action="store_const", const=True)
     parser.add_argument("-v", "--verbose", dest="verbose_count",
                             action="count", default=1,
                             help="increases log verbosity for each occurence.")
