@@ -28,12 +28,13 @@ config = {
         'clip_size' : { 'webcam' : 400, 'screen' : 1280, 'background' : 1280 }, # desired width of video clips
         'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
-        "text_vpos" : "bottom",
-        "text_size" : 70,
+        "text_vpos" : "top",
+        "text_size" : 50,
         "text_duration" : 5, # how long to show text
         "text_fade_duration" : 0.4, # how long to fade in and out the text
         "duration" : 0, # duration of the final clip
         "speed": 1,
+        "show_text" : False,
     },
     ##########################################################
     'sequence' : [
@@ -43,11 +44,13 @@ config = {
         "clip_size" : { 'webcam' : 800, 'background' : 1280 },
         "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "yosys show",
+        "show_text": True,
     },
     {
         "time" : (0,38),
         "text_size" : 50,
         "text" : "github.com/mattvenn/icestick-multisegment",
+        "show_text": True,
     },
     {
         "time" : (1,3),
@@ -56,18 +59,17 @@ config = {
     {
         "time" : (1,21),
         "text" : "make and prog",
-        "text_duration" : 3, # how long to show text
     },
     {
         "time" : (1,25),
         "text" : "exciting demo!",
+        "show_text": True,
         "comp" : [ "background", "webcam" ],
         "clip_size" : { 'webcam' : 800, 'background' : 1280 },
         "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
     },
     {
         "time" : (1,33),
-        "text_duration" : 4, # how long to show text
     },
     {
         "time" : (1,38),
@@ -88,6 +90,7 @@ config = {
     {
         "time" : (3,9),
         "text" : "signal vectors",
+        "show_text": True,
     },
     {
         "time" : (3,40),
@@ -99,6 +102,7 @@ config = {
     {
         "time" : (3,50),
         "text" : "yosys appnote 011",
+        "show_text": True,
     },
     {
         "time" : (4,14),
