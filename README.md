@@ -20,6 +20,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * generate a youtube compatible TOC - done
 * full screen titles - todo
 * put font/threads into config - todo
+* be able to have seperate short videos at start/end etc
 
 # requirements
 
