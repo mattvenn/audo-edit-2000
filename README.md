@@ -90,3 +90,6 @@ then cd /home/moviepy/auto-edit-2000
 git pull
 ln -s /yosys-show
 python render.py --config configs/yosys-show.py
+
+02:33 - c4 instance,  4 threads
+02:23 - c4 instance, 16 threads

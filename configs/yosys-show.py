@@ -16,6 +16,13 @@ config = {
                 'start': 2.25, # was 1.5. vlc adjusted -0.75s (hastened)
                 'audio': False,
             },
+            'intro' :
+            {
+                'type' : 'video',
+                'file' : 'yosys-show/cut.mp4', # 1280 x 720
+                'start': 0,
+                'audio': False,
+            },
             'background'   :
             {
                 'file' : 'yosys-show/ice40-die.jpeg',
@@ -38,6 +45,10 @@ config = {
     },
     ##########################################################
     'sequence' : [
+    {
+        "time" : (0),
+        "comp" : [ "intro" ],
+    },
     {
         "time" : (0,22),
         "comp" : [ "background", "webcam" ],
