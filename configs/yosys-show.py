@@ -19,7 +19,7 @@ config = {
             'intro' :
             {
                 'type' : 'video',
-                'file' : 'yosys-show/cut.mp4', # 1280 x 720
+                'file' : 'yosys-show/intro.mp4', # 1280 x 720
                 'start': 0,
                 'audio': False,
             },
@@ -32,8 +32,8 @@ config = {
     'sequence_defaults' :
     {
         "comp" : [ 'screen', 'webcam' ],
-        'clip_size' : { 'webcam' : 400, 'screen' : 1280, 'background' : 1280 }, # desired width of video clips
-        'clip_pos' : { 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
+        'clip_size' : { 'intro' : 1280, 'webcam' : 400, 'screen' : 1280, 'background' : 1280 }, # desired width of video clips
+        'clip_pos' : { 'intro' : (0,0), 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
         "text_vpos" : "top",
         "text_size" : 50,
@@ -42,11 +42,13 @@ config = {
         "duration" : 0, # duration of the final clip
         "speed": 1,
         "show_text" : False,
+        "end" : (0,0),
     },
     ##########################################################
     'sequence' : [
     {
-        "time" : (0),
+        "time" : (0,0),
+        "end"  : (0,2),
         "comp" : [ "intro" ],
     },
     {

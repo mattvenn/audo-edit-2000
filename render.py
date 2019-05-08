@@ -46,7 +46,9 @@ def create_sequence():
             
         # do this to avoid repetition of times in the config file
         shot_start = sequence[shot_num]['time']
-        shot_end   = sequence[shot_num+1]['time']
+        shot_end   = get_shot_property('end', shot)
+        if shot_end == (0,0):
+            shot_end   = sequence[shot_num+1]['time']
 
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
