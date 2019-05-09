@@ -116,7 +116,7 @@ def create_sequence():
 def preview_transition(index, preview_length=10):
     clip1 = config['sequence'][index-1]['clip']
     clip2 = config['sequence'][index]['clip']
-    concatenate_videoclips([clip1, clip2]).subclip(
+    concatenate_videoclips([clip1, clip2], method="compose").subclip(
                 clip1.duration - preview_length/2, clip1.duration + preview_length/2).preview()
 
 # 1 indexed
@@ -207,7 +207,8 @@ if __name__ == '__main__':
     if args.interactive:
         import ipdb; ipdb.set_trace()
 
-    final = concatenate_videoclips(clips)
+    # https://github.com/Zulko/moviepy/blob/master/moviepy/video/compositing/concatenate.py
+    final = concatenate_videoclips(clips, method="compose") 
 
     logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
