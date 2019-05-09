@@ -18,9 +18,9 @@ I'm building this tool to make it easier to create and publish howto style video
 * fade titles or have some nicer transition - done
 * position of titles - done
 * generate a youtube compatible TOC - done
-* full screen titles - todo
+* be able to have seperate short videos at start/end etc - done
+* be able to change audio sync - seems off on yosys-show vid
 * put font/threads into config - todo
-* be able to have seperate short videos at start/end etc
 
 # requirements
 
