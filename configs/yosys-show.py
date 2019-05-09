@@ -7,7 +7,7 @@ config = {
                 'type' : 'video',
                 'file' : 'yosys-show/yosys-show-webcam.mkv', # 800 x 600
                 'start': 0,
-                'audio': 'yosys-show/yosys-show-webcam.wav',
+                'audio': 'yosys-show/yosys-show-webcam.wav', # 0.3s out - vlc adjusted -0.3s (hastened)
             },
             'screen' :
             {
