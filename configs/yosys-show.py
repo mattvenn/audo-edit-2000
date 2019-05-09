@@ -5,14 +5,14 @@ config = {
             'webcam' :
             { 
                 'type' : 'video',
-                'file' : 'yosys-show/yosys-show-webcam.mkv', #  1280 x 800
+                'file' : 'yosys-show/yosys-show-webcam.mkv', # 800 x 600
                 'start': 0,
                 'audio': 'yosys-show/yosys-show-webcam.wav',
             },
             'screen' :
             {
                 'type' : 'video',
-                'file' : 'yosys-show/yosys-show-screen.mkv', # 800 x 600
+                'file' : 'yosys-show/yosys-show-screen.mkv', # 1280 x 800
                 'start': 2.25, # was 1.5. vlc adjusted -0.75s (hastened)
                 'audio': False,
             },
@@ -32,8 +32,8 @@ config = {
     'sequence_defaults' :
     {
         "comp" : [ 'screen', 'webcam' ],
-        'clip_size' : { 'intro' : 1280, 'webcam' : 400, 'screen' : 1280, 'background' : 1280 }, # desired width of video clips
-        'clip_pos' : { 'intro' : (0,0), 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
+        'clip_size' : { 'intro' : (1280,720), 'webcam' : (400,300), 'screen' : (1280,800), 'background' : (1280,800) }, # desired width of video clips
+        'clip_pos' : { 'intro' : (0,30), 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
         "text_vpos" : "top",
         "text_size" : 50,
@@ -54,8 +54,8 @@ config = {
     {
         "time" : (0,22),
         "comp" : [ "background", "webcam" ],
-        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
+        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,720) },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (720-600)/2), 'background': (0,0) },
         "text" : "yosys show",
         "show_text": True,
     },
@@ -78,8 +78,8 @@ config = {
         "text" : "exciting demo!",
         "show_text": True,
         "comp" : [ "background", "webcam" ],
-        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
+        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,720) },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (720-600)/2), 'background': (0,0) },
     },
     {
         "time" : (1,33),
@@ -108,8 +108,8 @@ config = {
     {
         "time" : (3,40),
         "comp" : [ "background", "webcam" ],
-        "clip_size" : { 'webcam' : 800, 'background' : 1280 },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
+        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,720) },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (720-600)/2), 'background': (0,0) },
         "text" : "summary",
     },
     {

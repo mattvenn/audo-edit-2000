@@ -75,10 +75,10 @@ def create_sequence():
             clip_size  = get_clip_property('clip_size', shot, clip_name)
             clip_pos   = get_clip_property('clip_pos' , shot, clip_name)
 
-            logging.info("clip %s set size = %d and position = %s" % (clip_name, clip_size, clip_pos))
+            logging.info("clip %s set size = %s and position = %s" % (clip_name, clip_size, clip_pos))
 
             # set size and pos here
-            clip = clip.resize(width=clip_size).set_pos(clip_pos)
+            clip = clip.resize(clip_size).set_pos(clip_pos)
 
             # audio
             if shot_speed != 1:
