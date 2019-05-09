@@ -54,8 +54,8 @@ config = {
     {
         "time" : (0,22),
         "comp" : [ "background", "webcam" ],
-        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,720) },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (720-600)/2), 'background': (0,0) },
+        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,800) },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "yosys show",
         "show_text": True,
     },
@@ -78,8 +78,8 @@ config = {
         "text" : "exciting demo!",
         "show_text": True,
         "comp" : [ "background", "webcam" ],
-        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,720) },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (720-600)/2), 'background': (0,0) },
+        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,800) },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
     },
     {
         "time" : (1,33),
@@ -108,8 +108,8 @@ config = {
     {
         "time" : (3,40),
         "comp" : [ "background", "webcam" ],
-        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,720) },
-        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (720-600)/2), 'background': (0,0) },
+        "clip_size" : { 'webcam' : (800,600), 'background' : (1280,800) },
+        "clip_pos" : { 'webcam' : ((1280 - 800)/2, (800-600)/2), 'background': (0,0) },
         "text" : "summary",
     },
     {
