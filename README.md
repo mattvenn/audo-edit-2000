@@ -108,5 +108,10 @@ docker updating:
 
 new commands for rendering video from droplet:
 
-scp -r matt@mattvenn.net:~/yosys-show .
+# show
+scp -r matt@mattvenn.net:~/symbiotic-videos/yosys-show .
 docker run -v ~/yosys-show:/auto-edit-2000/yosys-show -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config configs/yosys-show.py"
+
+# cover
+scp -r matt@mattvenn.net:~/symbiotic-videos/cover .
+docker run -v ~/cover:/auto-edit-2000/cover -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config configs/cover.py"
