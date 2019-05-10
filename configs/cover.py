@@ -25,7 +25,7 @@ config = {
             'intro' :
             {
                 'type' : 'video',
-                'file' : 'yosys-show/symbiotic-intro.mp4', # 1280 x 800
+                'file' : 'cover/symbiotic-intro.mp4', # 1280 x 800
                 'start': 0,
                 'audio': False,
             },
