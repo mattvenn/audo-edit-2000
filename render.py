@@ -189,7 +189,7 @@ if __name__ == '__main__':
                 audio = AudioFileClip(file_conf['audio'])
                 if file_conf.has_key('audio_offset'):
                     logging.info("offseting audio by %f" % file_conf['audio_offset'])
-                    audio = audio.set_start(file_conf['audio_offset'])
+                    audio = audio.subclip(file_conf['audio_offset'])
                     
                 clip = clip.set_audio(audio)
                 
@@ -215,6 +215,9 @@ if __name__ == '__main__':
 
     # https://github.com/Zulko/moviepy/blob/master/moviepy/video/compositing/concatenate.py
     final = concatenate_videoclips(clips, method="compose") 
+
+    # dump timings
+    print_youtube_toc()
 
     logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
