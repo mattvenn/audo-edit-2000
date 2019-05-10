@@ -73,7 +73,9 @@ def create_sequence():
 
             # return defaults if not set
             clip_size  = get_clip_property('clip_size', shot, clip_name)
+            assert type(clip_size) is tuple
             clip_pos   = get_clip_property('clip_pos' , shot, clip_name)
+            assert type(clip_pos) is tuple
 
             logging.info("clip %s set size = %s and position = %s" % (clip_name, clip_size, clip_pos))
 
@@ -185,6 +187,10 @@ if __name__ == '__main__':
             else:
                 logging.info("using audio in file %s" % file_conf['audio'])
                 audio = AudioFileClip(file_conf['audio'])
+                if file_conf.has_key('audio_offset'):
+                    logging.info("offseting audio by %f" % file_conf['audio_offset'])
+                    audio = audio.set_start(file_conf['audio_offset'])
+                    
                 clip = clip.set_audio(audio)
                 
         elif file_conf['type'] == 'image':
