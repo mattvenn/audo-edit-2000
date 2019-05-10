@@ -19,7 +19,7 @@ config = {
             'intro' :
             {
                 'type' : 'video',
-                'file' : 'yosys-show/intro.mp4', # 1280 x 720
+                'file' : 'yosys-show/symbiotic-intro.mp4', # 1280 x 800
                 'start': 0,
                 'audio': False,
             },
@@ -32,7 +32,7 @@ config = {
     'sequence_defaults' :
     {
         "comp" : [ 'screen', 'webcam' ],
-        'clip_size' : { 'intro' : (1280,720), 'webcam' : (400,300), 'screen' : (1280,800), 'background' : (1280,800) }, # desired width of video clips
+        'clip_size' : { 'intro' : (1280,800), 'webcam' : (400,300), 'screen' : (1280,800), 'background' : (1280,800) }, # desired width of video clips
         'clip_pos' : { 'intro' : (0,30), 'webcam' : (1280 - 400, 0), 'screen' : (0,0), 'background' : (0,0) },
         "text" : None,
         "text_vpos" : "top",
@@ -48,7 +48,7 @@ config = {
     'sequence' : [
     {
         "time" : (0,0),
-        "end"  : (0,2),
+        "end"  : (0,3),
         "comp" : [ "intro" ],
     },
     {
