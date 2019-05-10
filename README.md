@@ -95,6 +95,18 @@ python render.py --config configs/yosys-show.py
 02:33 - c4 instance,  4 threads
 02:23 - c4 instance, 16 threads
 
-Fri 10 May 17:29:50 CEST 2019
+# Fri 10 May 17:29:50 CEST 2019
 
 something about the new yosys show config (intro animation or sizing?) has increased render time to 7 minutes
+
+docker updating:
+* make changes
+* exit
+* docker commit <id> -m "commit message" mattvenn/moviepy:<newtag>
+* docker login
+* docker push mattvenn/moviepy:<newtag>
+
+new commands for rendering video from droplet:
+
+scp -r matt@mattvenn.net:~/yosys-show .
+docker run -v ~/yosys-show:/auto-edit-2000/yosys-show -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config configs/yosys-show.py"
