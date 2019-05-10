@@ -19,7 +19,7 @@ I'm building this tool to make it easier to create and publish howto style video
 * position of titles - done
 * generate a youtube compatible TOC - done
 * be able to have seperate short videos at start/end etc - done
-* be able to change audio sync - seems off on yosys-show vid
+* be able to change audio sync - seems off on yosys-show vid - done
 * put font/threads into config - todo
 
 # requirements
@@ -94,3 +94,7 @@ python render.py --config configs/yosys-show.py
 
 02:33 - c4 instance,  4 threads
 02:23 - c4 instance, 16 threads
+
+Fri 10 May 17:29:50 CEST 2019
+
+something about the new yosys show config (intro animation or sizing?) has increased render time to 7 minutes
