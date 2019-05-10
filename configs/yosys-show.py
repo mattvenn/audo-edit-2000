@@ -115,7 +115,7 @@ config = {
     },
     {
         "time" : (3,50),
-        "text" : "yosys appnote 011",
+        "text" : "appnote: http://bit.ly/yosys_appnote_011",
         "show_text": True,
     },
     {

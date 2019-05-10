@@ -62,7 +62,7 @@ config = {
     },
     {
         "time" : (0,40),
-        "text" : "github.com/mattvenn/ws2812-core",
+        "text" : "http://github.com/mattvenn/ws2812-core",
         "show_text": True,
     },
     {
@@ -129,7 +129,7 @@ config = {
     },
     {
         "time" : (8,1),
-        "text" : "webpage...",
+        "text" : "http://bit.ly/ws2812",
     },
     {
         "time" : (8,55),
