@@ -116,7 +116,14 @@ def create_sequence():
 # useful functions for previewing the clips and transitions
 def preview_transition(index, preview_length=10):
     clip1 = config['sequence'][index]['clip']
-    clip2 = config['sequence'][index+1]['clip']
+    while True:
+        try:
+            index += 1
+            clip2 = config['sequence'][index]['clip']
+            break
+        except KeyError as e:
+            logging.info("skipping empty clip at %d" % index)
+
     concatenate_videoclips([clip1, clip2]).subclip(
                 clip1.duration - preview_length/2, clip1.duration + preview_length/2).preview()
 
