@@ -118,3 +118,25 @@ docker run -v ~/cover:/auto-edit-2000/cover -ti mattvenn/moviepy:install_4 /bin/
 
 # axi-lite formal
 docker run -v ~/axi-lite-formal:/auto-edit-2000/axi-lite-formal -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config axi-lite-formal/config.py"
+
+# Mon 20 May 19:26:24 CEST 2019
+
+performance investigation
+yosys show
+
+aa25ee4f634da8314bd83a07fa2b50d1552be32f : 2:16
+ae4291f875cd893aaea76f298e2e06a7b3567293 : 2:23
+6a95ed944ff027b4922a1aa0d6b978b5353174f0 : ~ 8
+0a51df5a0c7a8447d87935f06ecd893ab2e1b648 : ~ 8 <--- commit that wrecked timing - added "compose" to the concatenate method
+ae4291f875cd893aaea76f298e2e06a7b3567293 : ~ 2
+
+axi-lite-formal 61:02 (with compose)
+axi-lite-formal 21:03 (without compose)
+cover: 6:57 (without compose)
+
+## git lfs
+
+sudo apt-get install git-lfs
+git-lfs clone https://github.com/mattvenn/axi-lite-formal-video
+docker run -v ~/axi-lite-formal-video:/auto-edit-2000/axi-lite-formal-video -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config axi-lite-formal-video/config.py"
+
