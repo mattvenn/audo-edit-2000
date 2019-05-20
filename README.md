@@ -115,3 +115,6 @@ docker run -v ~/yosys-show:/auto-edit-2000/yosys-show -ti mattvenn/moviepy:insta
 # cover
 scp -r matt@mattvenn.net:~/symbiotic-videos/cover .
 docker run -v ~/cover:/auto-edit-2000/cover -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config configs/cover.py"
+
+# axi-lite formal
+docker run -v ~/axi-lite-formal:/auto-edit-2000/axi-lite-formal -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config axi-lite-formal/config.py"
