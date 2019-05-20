@@ -114,30 +114,27 @@ def create_sequence():
         shot['duration'] = shot['clip'].duration
     
 # useful functions for previewing the clips and transitions
-# 1 indexed
 def preview_transition(index, preview_length=10):
-    clip1 = config['sequence'][index-1]['clip']
-    clip2 = config['sequence'][index]['clip']
-    concatenate_videoclips([clip1, clip2], method="compose").subclip(
+    clip1 = config['sequence'][index]['clip']
+    clip2 = config['sequence'][index+1]['clip']
+    concatenate_videoclips([clip1, clip2]).subclip(
                 clip1.duration - preview_length/2, clip1.duration + preview_length/2).preview()
 
-# 1 indexed
 def preview(index):
-    config['sequence'][index-1]['clip'].preview()
+    config['sequence'][index]['clip'].preview()
 
 def sec_to_min(seconds):
     minutes = int(seconds / 60)
     seconds = seconds - minutes * 60
     return "%02d:%02d" % (minutes, seconds)
 
-# 1 indexed
 def print_sections():
     run_time = 0
     for shot_num, shot in enumerate(config['sequence'][0:-1]):
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_duration  = get_shot_property('duration', shot)
-        logging.info("%02d : runtime %s length %s text: %s speed: %s" % (shot_num+1, sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
+        logging.info("%02d : runtime %s length %s text: %s speed: %s" % (shot_num, sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
         run_time += shot_duration
     logging.info("total duration = %s" % sec_to_min(run_time))
 
@@ -214,7 +211,8 @@ if __name__ == '__main__':
         import ipdb; ipdb.set_trace()
 
     # https://github.com/Zulko/moviepy/blob/master/moviepy/video/compositing/concatenate.py
-    final = concatenate_videoclips(clips, method="compose") 
+    # compose trebled the time it takes to do a final render - and doesn't seem to matter anymore
+    final = concatenate_videoclips(clips) 
 
     # dump timings
     print_youtube_toc()
