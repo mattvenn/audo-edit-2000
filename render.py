@@ -7,7 +7,10 @@ import numpy as np
 
 # utilities to get defaults for missing keys in the config
 def get_clip_property(key, shot, clip_name):
-    return shot.get(key, config['sequence_defaults'][key])[clip_name]
+    try:
+        return shot.get(key, config['sequence_defaults'][key])[clip_name]
+    except KeyError: # allow the override to only specify the parameters that are different
+        return config['sequence_defaults'][key][clip_name]
 
 def get_shot_property(key, shot):
     return shot.get(key, config['sequence_defaults'][key])
