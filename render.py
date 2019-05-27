@@ -162,7 +162,8 @@ def print_youtube_toc():
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="simple automated video editing")
-    parser.add_argument('--config', required=True, help="config.py configuration file")
+    parser.add_argument('--config', default='config.py', help="config.py configuration file")
+    parser.add_argument('--directory', help="where all the files are", default='.')
     parser.add_argument('--max-shot', type=int, help="process up to this number of shots in the sequence")
     parser.add_argument('--interactive', action="store_const", const=True)
     parser.add_argument("-v", "--verbose", dest="verbose_count",
@@ -175,7 +176,8 @@ if __name__ == '__main__':
 
     import runpy
     try:
-        config = runpy.run_path(args.config)['config']
+        logging.info("opening config file %s" % os.path.join(args.directory, args.config))
+        config = runpy.run_path(os.path.join(args.directory, args.config))['config']
     except IOError:
         exit("no config file found %s" % args.config)
     except KeyError:
@@ -185,7 +187,7 @@ if __name__ == '__main__':
     for name, file_conf in config['files'].items():
         if file_conf['type'] == 'video':
             logging.info("opening video for file %s" % name)
-            clip = VideoFileClip(file_conf['file'])
+            clip = VideoFileClip(os.path.join(args.directory, file_conf['file']))
             if not file_conf['audio']:
                 logging.info("removing audio for file %s" % name)
                 clip = clip.without_audio()
@@ -193,16 +195,16 @@ if __name__ == '__main__':
                 logging.info("using audio in file %s" % name)
             else:
                 logging.info("using audio in file %s" % file_conf['audio'])
-                audio = AudioFileClip(file_conf['audio'])
+                audio = AudioFileClip(os.path.join(args.directory, file_conf['audio']))
                 if file_conf.has_key('audio_offset'):
-                    logging.info("offseting audio by %f" % file_conf['audio_offset'])
+                    logging.info("offsetting audio by %f" % file_conf['audio_offset'])
                     audio = audio.subclip(file_conf['audio_offset'])
                     
                 clip = clip.set_audio(audio)
                 
         elif file_conf['type'] == 'image':
             logging.info("opening image for file %s" % name)
-            clip = ImageClip(file_conf['file'])
+            clip = ImageClip(os.path.join(args.directory, file_conf['file']))
         else:
             logger.warning("no such file type %s" % file_conf['type'])
             exit(1)
@@ -229,5 +231,5 @@ if __name__ == '__main__':
 
     logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
-    final.write_videofile(config['outfile'], fps=20, threads=4) # audio_fps=44100,codec = 'libx264'
+    final.write_videofile(os.path.join(args.directory, config['outfile']), fps=20, threads=4) # audio_fps=44100,codec = 'libx264'
     logging.info("finished rendering in %s" % sec_to_min(time.time() - start_time))
