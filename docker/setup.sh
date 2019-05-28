@@ -5,3 +5,4 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bi
 apt update
 apt -y install docker-ce
 docker pull mattvenn/moviepy:install_4
+sudo apt-get install git-lfs
