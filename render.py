@@ -188,6 +188,8 @@ if __name__ == '__main__':
         if file_conf['type'] == 'video':
             logging.info("opening video for file %s" % name)
             clip = VideoFileClip(os.path.join(args.directory, file_conf['file']))
+
+            # handle audio
             if not file_conf['audio']:
                 logging.info("removing audio for file %s" % name)
                 clip = clip.without_audio()
@@ -199,7 +201,6 @@ if __name__ == '__main__':
                 if file_conf.has_key('audio_offset'):
                     logging.info("offsetting audio by %f" % file_conf['audio_offset'])
                     audio = audio.subclip(file_conf['audio_offset'])
-                    
                 clip = clip.set_audio(audio)
                 
         elif file_conf['type'] == 'image':
@@ -208,6 +209,14 @@ if __name__ == '__main__':
         else:
             logger.warning("no such file type %s" % file_conf['type'])
             exit(1)
+
+        # handle mask
+        if file_conf.has_key('mask'):
+            logging.info("creating mask for clip colour %s" % file_conf['mask'])
+            # https://github.com/Zulko/moviepy/issues/389 for defaults for thr and s
+            # https://zulko.github.io/moviepy/ref/videofx/moviepy.video.fx.all.mask_color.html
+            clip = vfx.mask_color(clip, color=file_conf['mask'], thr=20, s=3) 
+
         file_conf['clip'] = clip
 
     # using the config, create all the clips and store in config['sequence'][index]['clip']
