@@ -33,18 +33,18 @@ def create_sequence():
     sequence = config['sequence']
     shot_list = []
 
-    for shot_num, shot in enumerate(sequence[0:-1]): # last item in sequence is 'end' placeholder
-        logging.info("sequence %02d/%02d" % (shot_num+1, len(sequence)-1))
+    for shot_num, shot in enumerate(sequence): # last item in sequence is 'end' placeholder
+        logging.info("sequence %02d/%02d" % (shot_num, len(sequence)))
         
         if args.max_shot is not None:
-            if shot_num == args.max_shot - 1:
+            if shot_num == args.max_shot:
                 logging.info("ending early due to --max-shot")
                 break
 
         comp = get_shot_property('comp', shot)
         if comp is None:
             shot['shot_duration'] = 0
-            logging.info("skipping shot %d" % (shot_num+1))
+            logging.info("skipping shot %d" % (shot_num))
             continue
             
         # do this to avoid repetition of times in the config file
@@ -140,7 +140,7 @@ def sec_to_min(seconds):
 
 def print_sections():
     run_time = 0
-    for shot_num, shot in enumerate(config['sequence'][0:-1]):
+    for shot_num, shot in enumerate(config['sequence']):
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_duration  = get_shot_property('duration', shot)
@@ -150,7 +150,7 @@ def print_sections():
 
 def print_youtube_toc():
     run_time = 0
-    for shot_num, shot in enumerate(config['sequence'][0:-1]):
+    for shot_num, shot in enumerate(config['sequence']):
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
         shot_duration  = get_shot_property('duration', shot)
@@ -240,5 +240,5 @@ if __name__ == '__main__':
 
     logging.info("rendering to %s" % config['outfile'])
     start_time = time.time()
-    final.write_videofile(os.path.join(args.directory, config['outfile']), fps=20, threads=4) # audio_fps=44100,codec = 'libx264'
+    final.write_videofile(os.path.join(args.directory, config['outfile']), fps=20, threads=4) #, audio_fps=44100, codec = 'libx264')
     logging.info("finished rendering in %s" % sec_to_min(time.time() - start_time))
