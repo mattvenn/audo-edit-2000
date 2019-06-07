@@ -143,5 +143,9 @@ docker run -v ~/axi-lite-formal-video:/auto-edit-2000/axi-lite-formal-video -ti 
 ## generic CLI
 
 video=yosys-show-video
-git clone https://github.com/mattvenn/$video
+git-lfs clone https://github.com/mattvenn/$video
 docker run -v ~/$video:/auto-edit-2000/$video -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --dir $video"
+
+# Fri  7 Jun 16:33:20 CEST 2019
+
+discovered that if one clip doesn't have audio then it will mess up vlc play bar (stops moving) and youtube preview.
