@@ -140,3 +140,8 @@ sudo apt-get install git-lfs
 git-lfs clone https://github.com/mattvenn/axi-lite-formal-video
 docker run -v ~/axi-lite-formal-video:/auto-edit-2000/axi-lite-formal-video -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --config axi-lite-formal-video/config.py"
 
+## generic CLI
+
+video=yosys-show-video
+git clone https://github.com/mattvenn/$video
+docker run -v ~/$video:/auto-edit-2000/$video -ti mattvenn/moviepy:install_4 /bin/bash -c "cd auto-edit-2000; pwd; git pull; ./render.py --dir $video"
