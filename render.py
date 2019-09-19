@@ -29,6 +29,11 @@ def offset(timing, offset):
 def get_shot_duration(start, end):
     return (end[0] * 60 + end[1]) - (start[0] * 60 + start[1])
 
+def second_to_duration(seconds):
+    minute = int(seconds / 60)
+    second = seconds - minute * 60
+    return (minute, second)
+
 def create_sequence():
     sequence = config['sequence']
     shot_list = []
@@ -41,6 +46,7 @@ def create_sequence():
                 logging.info("ending early due to --max-shot")
                 break
 
+        # get composition
         comp = get_shot_property('comp', shot)
         if comp is None:
             shot['shot_duration'] = 0
@@ -50,8 +56,10 @@ def create_sequence():
         # do this to avoid repetition of times in the config file
         shot_start = sequence[shot_num]['time']
         shot_end   = get_shot_property('end', shot)
+
+        # if no end set, use the next clip's start time
         if shot_end == (0,0):
-            shot_end   = sequence[shot_num+1]['time']
+            shot_end = sequence[shot_num+1]['time']
 
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
@@ -115,6 +123,14 @@ def create_sequence():
         # composite the clips and store
         shot['clip'] = CompositeVideoClip(shot['clips'])
         shot['duration'] = shot['clip'].duration
+
+        # Unused - keep a track of each clip's real start time (seconds)
+        if shot_num > 0:
+            shot['start_time'] = last_duration + last_start
+        else:
+            shot['start_time'] = 0
+        last_start = shot['start_time']
+        last_duration = shot['duration']
     
 # useful functions for previewing the clips and transitions
 def preview_transition(index, preview_length=10):
@@ -130,8 +146,11 @@ def preview_transition(index, preview_length=10):
     concatenate_videoclips([clip1, clip2]).subclip(
                 clip1.duration - preview_length/2, clip1.duration + preview_length/2).preview()
 
-def preview(index):
-    config['sequence'][index]['clip'].preview()
+def preview(index, duration=None):
+    if duration is None:
+        config['sequence'][index]['clip'].preview()
+    else:
+        config['sequence'][index]['clip'].subclip(0, duration).preview()
 
 def sec_to_min(seconds):
     minutes = int(seconds / 60)
@@ -143,8 +162,9 @@ def print_sections():
     for shot_num, shot in enumerate(config['sequence']):
         shot_speed = get_shot_property('speed', shot)
         shot_text  = get_shot_property('text', shot)
+        start_time  = shot['start_time']
         shot_duration  = get_shot_property('duration', shot)
-        logging.info("%02d : runtime %s length %s text: %s speed: %s" % (shot_num, sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
+        logging.info("%02d : starttime %s runtime %s length %s text: %s speed: %s" % (shot_num, sec_to_min(start_time), sec_to_min(run_time), sec_to_min(shot_duration), shot_text, shot_speed))
         run_time += shot_duration
     logging.info("total duration = %s" % sec_to_min(run_time))
 
