@@ -75,7 +75,12 @@ def create_sequence():
                 clip_offset = config['files'][clip_name]['start']
                 offset_start = offset(shot_start, clip_offset)
                 offset_end   = offset(shot_end,   clip_offset)
-                clip = config['files'][clip_name]['clip'].subclip(offset_start, offset_end)
+                try:
+                    clip = config['files'][clip_name]['clip'].subclip(offset_start, offset_end)
+                except ValueError as e:
+                    logging.error(e)
+                    exit("error loading clip file %s, start %s end %s" % (clip_name, offset_start, offset_end))
+
                 logging.debug("clip %s start/end %s %s adj start/end %s %s" % 
                              (clip_name, shot_start, shot_end, offset_start, offset_end))
                 
@@ -92,6 +97,11 @@ def create_sequence():
 
             # set size and pos here
             clip = clip.resize(clip_size).set_pos(clip_pos)
+
+            # handle oversize clips due to zooming
+            crop = get_clip_property('crop', shot, clip_name)
+            if crop is not None:
+                clip = clip.crop(x1 = crop[0], y1 = crop[1], width = crop[2], height = crop[3])
 
             # audio
             if shot_speed != 1:
